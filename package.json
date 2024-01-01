@@ -1,0 +1,32 @@
+{
+  "name": "nodejs",
+  "version": "1.0.0",
+  "description": "zero to one nodejs",
+  "main": "sever.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon ./src/sever.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nguyenmanh1808/nodejs.git"
+  },
+  "keywords": [
+    "nodejs"
+  ],
+  "author": "Mannh Nguyen",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nguyenmanh1808/nodejs/issues"
+  },
+  "homepage": "https://github.com/nguyenmanh1808/nodejs#readme",
+  "dependencies": {
+    "dotenv": "16.0.3",
+    "ejs": "3.1.8",
+    "express": "4.18.2",
+    "mysql2": "2.3.3"
+  },
+  "devDependencies": {
+    "nodemon": "2.0.20"
+  }
+}
