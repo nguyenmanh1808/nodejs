@@ -1,5 +1,6 @@
 const express = require('express');
 const path = require('path');
+const ListView = ['admin', 'users'];
 
 const configViewEngine = (app) => {
     app.set('views', path.join('./src', 'views'));

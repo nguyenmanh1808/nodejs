@@ -17,6 +17,7 @@ app.use(express.urlencoded()); //Parse URL-encoded bodies
 configViewEngine(app);
 
 
+
 //Khai bao rote
 app.use('/', webRoutes);
 

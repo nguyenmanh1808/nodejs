@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home Page</title>
-    <link rel="stylesheet" href="./css/styles.css">
+    <title>Quản lý người dùng</title>
+    <link rel="stylesheet" href="/css/styles.css">
 </head>
 
 <style>
@@ -48,20 +48,37 @@
         <tr>
             <th>ID</th>
             <th>Email</th>
-            <th>Name</th>
-            <th>City</th>
-            <th>Action</th>
+            <th>Role</th>
+            <th>Tên</th>
+            <th>Mật khẩu</th>
+
+            <th></th>
         </tr>
-        <tr>
-            <td>Peter</td>
-            <td>Griffin</td>
-            <td>$100</td>
-            <td>$100</td>
-            <td>
-                <button>Edit</button>
-                <button>Delete</button>
-            </td>
-        </tr>
+
+        <% for(let i=0; i < ListUsers.length; i++) { %>
+            <tr>
+                <td>
+                    <%= ListUsers[i].id %>
+                </td>
+                <td>
+                    <%= ListUsers[i].email %>
+                </td>
+                <td>
+                    <%= ListUsers[i].role_id %>
+                </td>
+                <td>
+                    <%= ListUsers[i].name %>
+                </td>
+                <td>
+                    <%= ListUsers[i].password %>
+                </td>
+                <td>
+                    <a href="/update">Sửa</a>
+                    <button>Xóa</button>
+                </td>
+
+            </tr>
+            <% } %>
 
 
     </table>

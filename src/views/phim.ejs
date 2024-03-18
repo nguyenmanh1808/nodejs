@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/font/fontawesome-free-6.0.0-web/css/all.min.css">
+    <link rel="stylesheet" href="/css/grid.css">
+    <link rel="stylesheet" href="/css/chiTietSP.css">
+    <link rel="stylesheet" href="/css/app.css">
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/detail.css">
+</head>
+
+<body>
+    <%- include('includes/head.ejs') %>
+        <div class="grid wide">
+            <div class="product-path">
+                <span><a href="/">Trang chủ</a> <i class="fa-solid fa-angle-right"></i>
+                    <a href="#">
+                        <% switch (phim.movie.type) { case 'single' : %>
+                            Phim lẻ
+                            <% break; case 'series' : %>
+                                Phim bộ
+                                <% break; } %>
+
+
+                    </a> <i class="fa-solid fa-angle-right"></i>
+                    <%=phim.movie.name %>
+                </span>
+            </div>
+            <div class=" product_detail">
+                <div class="product">
+                    <div class="product_img" style="background-image: url(<%=phim.movie.thumb_url%>);">
+                    </div>
+                    <div class="product_intro">
+                        <div class="product_title">
+                            <h2>
+                                <%=phim.movie.name %>
+                            </h2>
+                        </div>
+                        <div class="product_detail_infor">
+
+                            <div class="product_supplier">
+                                <span style="font-weight: 700;">Tóm tắt:</span>
+                                <span>
+                                    <%=phim.movie.content %>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="product_infor_2">
+                            <div class="product_trademark">
+                                <span style="font-weight: 700;">Quốc gia:</span>
+                                <span>
+                                    <%=phim.movie.country[0].name %>
+                                </span>
+                            </div>
+                            <div class="product_form">
+                                <span style="font-weight: 700;">Diễn viên:</span>
+                                <span>
+                                    <% for(let i=0; i <phim.movie.actor.length; i++){ %>
+                                        <%= phim.movie.actor[i]%> ,
+                                            <% } %>
+                                </span>
+                            </div>
+                            <div class="product_form">
+                                <span style="font-weight: 700;">Thời lượng:</span>
+                                <span>
+                                    <%= phim.movie.time%>
+                                </span>
+                            </div>
+                            <div class="product_form">
+                                <span style="font-weight: 700;">Lượt xem:</span>
+                                <span>
+                                    <%= phim.movie.view%>
+                                </span>
+                            </div>
+                            <div class="product_form">
+                                <span style="font-weight: 700;">Trạng thái:</span>
+                                <span>
+                                    <% switch (phim.movie.status) { case 'trailer' : %>
+                                        Chưa ra mắt
+                                        <% break; case 'ongoing' : %>
+                                            Đang cập nhật
+                                            <% break; case 'completed' : %>
+                                                Đã hoàn thành
+                                                <% break; } %>
+
+                                </span>
+                            </div>
+                        </div>
+                        <!-- <div class="product_rating">
+                            <i class=" fas fa-star star"></i>
+                            <i class=" fas fa-star star"></i>
+                            <i class=" fas fa-star star"></i>
+                            <i class=" fas fa-star star"></i>
+                            <i class=" fas fa-star star"></i>
+                            <span style="color:orange;">(0) Đánh giá</span>
+
+                        </div> -->
+                    </div>
+
+
+                </div>
+
+            </div>
+            <div class="btn_action">
+                <a href="<%=phim.episodes[0].server_data[0].link_embed %>" target="_blank">Xem phim</a>
+            </div>
+
+            <%if (phim.movie.type=='series' ) {%>
+                <div class="epi_container">
+                    <div class="epi-tiltle">Danh sách các tập phim:</div>
+                    <div class="epi-movies-list">
+                        <% for(let i=0; i < phim.episodes[0].server_data.length; i++) { %>
+                            <div class="epi-ittem">
+                                <a href="<%=phim.episodes[0].server_data[i].link_embed%>" class="epi-item-link">Tập
+                                    <%=phim.episodes[0].server_data[i].name%>
+                                </a>
+                            </div>
+                            <% } %>
+
+                    </div>
+                </div>
+                <%}%>
+
+                    <div class="user_comment">
+
+                    </div>
+        </div>
+
+
+
+
+
+        <%- include('includes/footer.ejs') %>
+</body>
+
+</html>
