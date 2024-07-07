@@ -1,11 +1,12 @@
-const connection = require('../config/DB');
+
 const { get } = require('../routes/web');
-const { getALlUsers, getAPI, getPhim } = require('../services/CRUD')
+const userServices = require('../services/userServices');
+const { getALlUsers, getAPI, getPhim } = require('../services/CRUD');
 const getHomepage = async (req, res) => {
 
     let results = await getALlUsers();
-
     return res.render('ListUsers.ejs', { ListUsers: results });
+
 }
 
 const getabc = async (req, res) => {
@@ -17,11 +18,8 @@ const postCreateUsers = async (req, res) => {
     console.log(req.body)
     let email = req.body.email;
     let name = req.body.Name;
-    let city = req.body.City;
-
-    let [results, fields] = await connection.query(`insert into users(email,name,city) values (?,?,?);`, [email, name, city]);
-
-
+    let password = req.body.password;
+    userServices.creNewUers(email,password,name)
     // connection.query(
     //     `select * from users`,
     //     function(err,results,fields){
@@ -31,15 +29,35 @@ const postCreateUsers = async (req, res) => {
     // const [result, fields] = await connection.query(`select * from users`);
     // console.log(">>>result = ", result);
 
-    res.send("create ueser successed")
+   return  res.redirect("/admin/users")
 }
-
+////Thêm sủa xóa
 const createUser = (req, res) => {
     res.render('create_user.ejs');
 }
-const updateUser = (req, res) => {
-    res.render('editUsers.ejs');
+const updateUser = async (req, res) => {
+    let id = req.params.id;
+    let user = await userServices.getUserByID(id);
+    let usesrData = {};
+    if(user && user.length > 0){
+        usesrData= user[0];
+    }
+    return res.render('editUsers.ejs',{result : usesrData});
 }
+const HandleDeleteUser = async(req, res)=>{
+    await userServices.deleteUser(req.params.id);
+     return  res.redirect("/admin/users");
+ }
+ const handleUpdateUser = async(req,res) =>{
+    let email = req.body.email;
+    let name = req.body.name;
+    let password = req.body.password;
+    let id =req.body.id
+    console.log(req.body)
+    await userServices.updateUserInfor( email,name,password,id);
+    return  res.redirect("/admin/users");
+ }
+///// MOVIE
 const deatailMovie = async (req, res) => {
     const slug = req.params.slug.trim();
     let results = await getPhim(slug);
@@ -51,13 +69,15 @@ const addMovies = async (req, res) => {
     return res.render('addMovies.ejs', { movies: result });
 }
 
+//////login-register
 const login = (req, res) => {
     res.render('Login.ejs');
 }
 const register = (req, res) => {
     res.render('register.ejs');
 }
+
 module.exports = {
-    getHomepage, getabc, postCreateUsers, createUser, updateUser, deatailMovie, addMovies, login, register
+    getHomepage, getabc, postCreateUsers, createUser, updateUser, deatailMovie, addMovies, login, register,HandleDeleteUser,handleUpdateUser
 }
 

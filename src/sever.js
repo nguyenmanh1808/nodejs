@@ -4,10 +4,12 @@ const express = require('express');
 const configViewEngine = require('./config/viewEngine');
 const webRoutes = require('./routes/web')
 const connection = require('./config/DB');
+const conectDBORM = require('./config/connectDB');
 
 const app = express();// app press
 const port = process.env.PORT || 8888;// port
 const hostname = process.env.HOST_NAME;
+
 
 //config require body
 app.use(express.json()); // Used to parse JSON bodies
@@ -22,8 +24,8 @@ configViewEngine(app);
 app.use('/', webRoutes);
 
 
-// test connection
-
+ // test connection
+// conectDBORM();
 
 
 ///

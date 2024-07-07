@@ -42,16 +42,14 @@
         <a href="/create">Create user</a>
     </div>
     <div class="table-container">
-        <div class="title">List Users</div>
+        <div class="title">Danh sách người dùng</div>
     </div>
     <table>
         <tr>
             <th>ID</th>
             <th>Email</th>
-            <th>Role</th>
-            <th>Tên</th>
             <th>Mật khẩu</th>
-
+            <th>Tên</th>
             <th></th>
         </tr>
 
@@ -60,21 +58,24 @@
                 <td>
                     <%= ListUsers[i].id %>
                 </td>
+                
                 <td>
                     <%= ListUsers[i].email %>
-                </td>
-                <td>
-                    <%= ListUsers[i].role_id %>
-                </td>
-                <td>
-                    <%= ListUsers[i].name %>
                 </td>
                 <td>
                     <%= ListUsers[i].password %>
                 </td>
                 <td>
-                    <a href="/update">Sửa</a>
-                    <button>Xóa</button>
+                    <%= ListUsers[i].username %>
+                </td>
+               
+                <td>
+                    <form style="display: inline;" action="/update-user/<%= ListUsers[i].id %>" method="Get">
+                        <button type="submit"> Cập nhật</button>
+                       </form>
+                   <form style="display: inline;" action="/delete-user/<%= ListUsers[i].id %>" method="POST">
+                    <button type="submit"> Xóa</button>
+                   </form>
                 </td>
 
             </tr>

@@ -1,16 +1,19 @@
 const express = require('express');
 const router = express.Router();
-const { getHomepage, getabc, postCreateUsers, createUser, updateUser, deatailMovie, addMovies, login, register } = require('../controllers/HomeController');
-router.get('/', getabc)
-router.get('/admin/users', getHomepage)
+const homeController = require('../controllers/HomeController');
+router.get('/', homeController.getabc)
+router.get('/admin/users', homeController.getHomepage)
 
 
-router.post('/create-user', postCreateUsers)
+router.post('/create-user', homeController.postCreateUsers)
 
-router.get('/create', createUser)
-router.get('/update', updateUser)
-router.get('/phim/:slug', deatailMovie)
-router.get('/page/:id', addMovies)
-router.get('/login', login)
-router.get('/register', register)
+router.get('/create',  homeController.createUser)
+
+router.get('/phim/:slug',  homeController.deatailMovie)
+router.get('/page/:id',  homeController.addMovies)
+router.get('/login',  homeController.login)
+router.get('/register',  homeController.register)
+router.get('/update-user/:id',  homeController.updateUser)
+router.post('/update-user',homeController.handleUpdateUser)
+router.post('/delete-user/:id', homeController.HandleDeleteUser)
 module.exports = router;

@@ -5,37 +5,37 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Update a user</title>
-    <link rel="stylesheet" href="./css/styles.css">
+    <link rel="stylesheet" href="../css/styles.css">
 </head>
 
 
 <body>
     <div class="topnav">
         <a href="/">Home</a>
-        <a href="/create" class="">Create user</a>
+        <a href="/create" class="active">Create user</a>
 
     </div>
     <div class="form-add-new">
-        <form action="/create-user" method="POST">
+        <form action="/update-user" method="POST">
             <fieldset>
-                <legend> Update a user</legend>
+                <legend> Update user</legend>
+                <input hidden value="<%=result.id %>" name="id">
                 <div class="input_group">
                     <label>Email:</label>
-                    <input type="text" name="email">
+                    <input value ="<%=result.email %>" type="text" name="email">
                 </div>
 
                 <div class="input_group">
                     <label>Name:</label>
-                    <input type="text" name="Name">
+                    <input value="<%=result.username %>" type="text" name="name">
                 </div>
 
                 <div class="input_group">
-                    <label>City:</label>
-                    <input type="text" name="City">
+                    <label>Mật khẩu:</label>
+                    <input value="<%=result.password %>" type="text" name="password">
                 </div>
-
                 <div>
-                    <button>Save</button>
+                    <button type="submit">Save</button>
                 </div>
             </fieldset>
         </form>

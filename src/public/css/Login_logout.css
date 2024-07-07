@@ -187,7 +187,7 @@ html {
 .right {
     background-color: #44a9d5;
     width: 275px;
-    padding: 32px 24px;
+    padding: 41px 24px;
     color: #fff;
 }
 
@@ -229,7 +229,7 @@ html {
 }
 
 .right.register {
-    padding-bottom: 176px;
+    padding-bottom: 190px;
 }
 
 .path {
