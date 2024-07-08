@@ -1,10 +1,10 @@
 
 const { get } = require('../routes/web');
 const userServices = require('../services/userServices');
-const { getALlUsers, getAPI, getPhim } = require('../services/CRUD');
+const { getAPI, getPhim } = require('../routes/api')
 const getHomepage = async (req, res) => {
 
-    let results = await getALlUsers();
+    let results = await userServices.getALlUsers();
     return res.render('ListUsers.ejs', { ListUsers: results });
 
 }
@@ -31,23 +31,19 @@ const postCreateUsers = async (req, res) => {
 
    return  res.redirect("/admin/users")
 }
-////Thêm sủa xóa
+////Thêm 
 const createUser = (req, res) => {
     res.render('create_user.ejs');
 }
+/// sửa
 const updateUser = async (req, res) => {
     let id = req.params.id;
     let user = await userServices.getUserByID(id);
     let usesrData = {};
-    if(user && user.length > 0){
-        usesrData= user[0];
-    }
+        usesrData = user;
     return res.render('editUsers.ejs',{result : usesrData});
 }
-const HandleDeleteUser = async(req, res)=>{
-    await userServices.deleteUser(req.params.id);
-     return  res.redirect("/admin/users");
- }
+
  const handleUpdateUser = async(req,res) =>{
     let email = req.body.email;
     let name = req.body.name;
@@ -56,6 +52,11 @@ const HandleDeleteUser = async(req, res)=>{
     console.log(req.body)
     await userServices.updateUserInfor( email,name,password,id);
     return  res.redirect("/admin/users");
+ }
+// xóa
+ const HandleDeleteUser = async(req, res)=>{
+    await userServices.deleteUser(req.params.id);
+     return  res.redirect("/admin/users");
  }
 ///// MOVIE
 const deatailMovie = async (req, res) => {

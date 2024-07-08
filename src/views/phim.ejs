@@ -38,6 +38,9 @@
             <div class=" product_detail">
                 <div class="product">
                     <div class="product_img" style="background-image: url(<%=phim.movie.thumb_url%>);">
+                        <div class="btn_action">
+                            <a href="<%=phim.episodes[0].server_data[0].link_embed %>" target="_blank">Xem phim</a>
+                        </div>
                     </div>
                     <div class="product_intro">
                         <div class="product_title">
@@ -110,9 +113,7 @@
                 </div>
 
             </div>
-            <div class="btn_action">
-                <a href="<%=phim.episodes[0].server_data[0].link_embed %>" target="_blank">Xem phim</a>
-            </div>
+           
 
             <%if (phim.movie.type=='series' ) {%>
                 <div class="epi_container">

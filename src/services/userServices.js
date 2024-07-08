@@ -2,33 +2,58 @@ const { name } = require('ejs');
 const connection = require('../config/DB');
 const bcrypt = require('bcrypt');
 const salt = bcrypt.genSaltSync(10);
+const db = require('../models/index');
    
+
+///////////////////
+const getALlUsers = async () => {
+   let users = [];
+   users = db.User.findAll();
+    return users;
+}
+const getUserByID = async(id) => {
+    let user = {}
+    user = await db.User.findOne({ where: { id: id } });
+    return user;
+}
+
+/////////////
 const hashUserPassword = (uerPassword) =>{
     let  hashPassword = bcrypt.hashSync(uerPassword, salt);
     return hashPassword;
 }
 
 const creNewUers = async (email, password, userName)=>{
-    
-    
     let hashPassword = hashUserPassword(password);
+    await  db.User.create({
+        email: email,
+        password: hashPassword,
+        username: userName
+    })
     
-    let [results, fields] = await connection.query(`insert into users(email,username,password) values (?,?,?);`, [email, userName, hashPassword]);
-    return results;
+}
+const updateUserInfor = async (email,name,password,id) =>{
+    let hashPassword = hashUserPassword(password);
+    await db.User.update(
+        { email: email,
+          password: hashPassword,
+          username: name
+         },
+        {
+          where: {
+            id: id,
+          },
+        },
+      );
 }
 
 const deleteUser = async (id) => {
-    let [results, fields] = await connection.query(`delete from users where id = ?`,[id]);
-    return results;
+    await db.User.destroy({
+        where: {id: id}
+    })
 }
-const getUserByID = async(id) => {
-    let [results, fields] = await connection.query(`select * from users where id = ?`,[id]);
-    return results;
-}
-const updateUserInfor = async (email,name,password,id) =>{
-    let [result,fields] = await connection.query(`update users set email = ?,username = ?,password = ? where id = ?`,[email,name,password,id])
-    return result;
-}
+
+
 module.exports = {
-    creNewUers,deleteUser,getUserByID,updateUserInfor
+    creNewUers,deleteUser,getUserByID,updateUserInfor,getALlUsers
 }
