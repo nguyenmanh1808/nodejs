@@ -1,6 +1,3 @@
-.grid.wide {
-    margin-top: 30px
-}
 
 .product-path {
     font-family: 'Times New Roman', Times, serif;
@@ -160,4 +157,13 @@
 
 .btn_action:hover {
     transform: scale(1.1);
+}
+
+/* */
+.product_detail_infor{
+    overflow: hidden;
+    display: inline-block;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
 }

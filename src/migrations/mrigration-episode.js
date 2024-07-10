@@ -1,22 +1,29 @@
 'use strict';
+
+const { name } = require("ejs");
+
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('Users', {
+    await queryInterface.createTable('Episodes', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      email: {
+      movieId: {
+        type: Sequelize.INTEGER
+      },
+      name: {
         type: Sequelize.STRING
       },
-      password: {
+      slug: {
+        type: Sequelize.INTEGER
+      },
+      ep_url: {
         type: Sequelize.STRING
       },
-      username: {
-        type: Sequelize.STRING
-      },
+     
       createdAt: {
         allowNull: true,
         type: Sequelize.DATE  
@@ -29,6 +36,6 @@ module.exports = {
     });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('Users');
+    await queryInterface.dropTable('Episodes');
   }
 };

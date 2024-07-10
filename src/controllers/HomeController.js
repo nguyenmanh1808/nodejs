@@ -62,12 +62,12 @@ const updateUser = async (req, res) => {
 const deatailMovie = async (req, res) => {
     const slug = req.params.slug.trim();
     let results = await getPhim(slug);
-    return res.render('phim.ejs', { phim: results });
+    return res.render('detailMovie.ejs', { phim: results });
 }
 const addMovies = async (req, res) => {
     const id = req.params.id.trim();
     let result = await getAPI(id);
-    return res.render('addMovies.ejs', { movies: result });
+    return res.render('moreMovies.ejs', { movies: result });
 }
 
 //////login-register
