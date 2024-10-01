@@ -1,19 +1,48 @@
+const express = require('express');
+const router = express.Router();
+const apiLoginRegiter = require('../controllers/apiLoginRegiter');
+const userController = require('../controllers/userController');
+const groupControllers = require('../controllers/groupController');
+const moviesController = require('../controllers/moviesController');
+const categoryController = require('../controllers/categoryController');
+const episodeController = require('../controllers/episodeController')
+const commentController = require('../controllers/commentController')
+const {checkUserJWT,checkUserPermision} = require('../middleware/jwtAction')
 
-const fetch = require("node-fetch");
+/// test api
+// router.all('*',checkUserJWT,checkUserPermision)
+
+///CRUD
+router.post("/register",apiLoginRegiter.handleRegister);
+router.post("/login",apiLoginRegiter.handleLogin);
+router.post("/logout",apiLoginRegiter.handleLogout);
+
+///
+
+router.get('/user/read',userController.readFunc);
+router.post('/user/create',userController.createFunc);
+router.put('/user/update',userController.updateFunc);
+router.delete('/user/delete',userController.deleteFunc)
+// get group
+router.get('/group/read',groupControllers.readFunc);
+
+// CRUD phim
+router.get('/movie/read',moviesController.readFunc);
+router.post('/movie/create',moviesController.createFunc);
+router.put('/movie/update',moviesController.updateFunc);
+router.delete('/movie/delete',moviesController.deleteFunc)
+// get category
+
+router.get('/category/read',categoryController.readFunc);
+router.post('/category/create',categoryController.createFunc);
+router.put('/category/update',categoryController.updateFunc);
+router.delete('/category/delete',categoryController.deleteFunc)
+//get episode
+router.get('/episode/read',episodeController.readFunc);
 
 
-const getAPI = async (page) => {
-    let response = await fetch(`https://ophim1.com/danh-sach/phim-moi-cap-nhat?page=${page}`);
-    let data = await response.json();
-    return data;
-}
-
-const getPhim = async (slug) => {
-    let a = `https://ophim1.com/phim/${slug}`;
-    let response = await fetch(a);
-    let data = await response.json();
-    return data;
-}
-module.exports = {
-     getAPI, getPhim
-}
+/// comment
+ router.get('/comment/read',commentController.readFunc);
+ router.delete('/comment/delete',commentController.deleteFunc);
+ router.post('/comment/create',commentController.createFunc);
+module.exports = router;

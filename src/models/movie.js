@@ -14,18 +14,20 @@ module.exports = (sequelize, DataTypes) => {
       Movie.belongsToMany(models.Category,{ through: 'Category_movie' })
       Movie.hasMany(models.Comment);
       Movie.hasMany(models.Episode);
+      Movie.hasMany(models.Category_movie);
     }
   };
   Movie.init({
     name: DataTypes.STRING,
-    description: DataTypes.STRING(600),
+    slug: DataTypes.STRING(100),
+    description: DataTypes.STRING(1000),
     type: DataTypes.STRING,
     time: DataTypes.STRING,
     status: DataTypes.STRING,
     national: DataTypes.STRING,
     view: DataTypes.INTEGER,
     url_img: DataTypes.STRING,
-    ep_current:  DataTypes.INTEGER,
+    ep_curent: DataTypes.INTEGER,
     ep_total: DataTypes.INTEGER,
     actor: DataTypes.STRING
   }, {

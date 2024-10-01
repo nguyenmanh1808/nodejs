@@ -1,8 +1,10 @@
 
 const { get } = require('../routes/web');
 const userServices = require('../services/userServices');
-const { getAPI, getPhim } = require('../routes/api')
+const { getAPI, getPhim } = require('../routes/apiMovie')
 const getHomepage = async (req, res) => {
+
+    console.log(req.cookies)
 
     let results = await userServices.getALlUsers();
     return res.render('ListUsers.ejs', { ListUsers: results });

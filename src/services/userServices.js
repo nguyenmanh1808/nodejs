@@ -24,7 +24,7 @@ const getALlUsers = async () => {
     //     raw: true,
     //     nest: true
     // })
-    console.log("check user",newUser);
+
     // console.log("check role",roles);
 
    let users = [];
