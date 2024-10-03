@@ -9,6 +9,7 @@ const episodeController = require('../controllers/episodeController')
 const commentController = require('../controllers/commentController')
 const {checkUserJWT,checkUserPermision} = require('../middleware/jwtAction')
 
+
 /// test api
 // router.all('*',checkUserJWT,checkUserPermision)
 
@@ -37,10 +38,14 @@ router.get('/category/read',categoryController.readFunc);
 router.post('/category/create',categoryController.createFunc);
 router.put('/category/update',categoryController.updateFunc);
 router.delete('/category/delete',categoryController.deleteFunc)
+
+////
+
 //get episode
 router.get('/episode/read',episodeController.readFunc);
-
-
+router.post('/episode/create',episodeController.createFunc);
+router.put('/episode/update',episodeController.updateFunc);
+router.delete('/episode/delete',episodeController.deleteFunc)
 /// comment
  router.get('/comment/read',commentController.readFunc);
  router.delete('/comment/delete',commentController.deleteFunc);
