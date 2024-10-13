@@ -1,7 +1,6 @@
 
-const { where } = require('sequelize/dist/index.js');
 const db = require('../models/index');
-
+const {veryfyToken} = require('../middleware/jwtAction')
 const { Op } = require('sequelize');
 
 /// get id film theo category
@@ -78,6 +77,7 @@ const getMoviesCategory = async(category)=>{
 }
 const getMoviesById = async (id)=>{
     try{
+        
         let data = await db.Movie.findOne({
             where: {id: id}
         });
@@ -136,6 +136,41 @@ const getMoviesPagnination = async(page,limit)=>{
      }
 }
 
+const getMovieSearch = async(input)=>{
+    try{
+        
+        let data = await db.Movie.findAll({
+            where:{
+                name:{
+                    [Op.like]: `%${input}%`,
+                }
+               
+            }
+        });
+        
+       if(data && data.length>0){
+            return {
+                EM:"Get movies success ",
+                EC:0,
+                DT: data
+            }
+       }
+       else{
+            return {
+                EM:"Get movies not success ",
+                EC:1,
+                DT: []
+            }
+       }
+    
+    // data ;à chuõi
+    
+}
+ catch(e){
+    console.log(e)
+}
+}
+///
 const createNewMovie = async(data)=>{
 
     try{
@@ -159,6 +194,8 @@ const createNewMovie = async(data)=>{
             ep_total: data.ep_total,
             url_img: data.url_img,
             actor: data.actor ,
+            img_thumb: data.img_thumb,
+            year: data.year,
             Category_movies: idCategory
         },{
             include:['Category_movies'],
@@ -166,7 +203,7 @@ const createNewMovie = async(data)=>{
         )
 
         return {
-            EM:"Tạo mới người dùng thành công",
+            EM:"Tạo mới phim thành công",
             EC:0,
             DT:""
         }
@@ -211,6 +248,8 @@ const updateMovie = async(data)=>{
                 ep_total: data.ep_total ,
                 url_img: data.url_img ,
                 actor: data.actor ,
+                img_thumb: data.img_thumb,
+                year: data.year,
             })
             
             return {
@@ -257,7 +296,142 @@ const deleteMovie = async(id)=>{
             }
         }
 }
+/// láy danh sách phimyeue thích
+const getMovieLike = async (data)=>{
+    try{
+        let dataUser = veryfyToken(data);
+        let user = await db.User.findOne({
+        where : {email: dataUser.email}
+        })
+
+        let listMovie = await db.Like.findAll({
+            where:{
+                userId: user.id,
+            },
+            include: {model: db.Movie}
+        })
+        return{
+            EM: ' Thành công',
+            EC: 0,
+            DT: listMovie
+        }
+    }
+    catch(e){
+        console.log(e);
+        return {
+            EM:'Lỗi với  sever',
+            EC: 1,
+             DT:""
+        }
+    }
+}
+
+const createLikeMovie = async(data)=>{
+    try{
+        let dataUser = veryfyToken(data.token);
+        let user = await db.User.findOne({
+        where : {email: dataUser.email}
+        })
+
+        await db.Like.create({
+            userId: user.id,
+            movieId:data.movieId
+           
+        })
+        return{
+            EM: 'Thành công',
+            EC: 0,
+            DT:""
+        }
+    }
+    catch(e){
+        console.log(e);
+        return {
+            EM:'Lỗi với  sever',
+            EC: 1,
+             DT:""
+        }
+    }
+}
+const deleteLikeMovie = async(data)=>{
+    try{
+        let dataUser = veryfyToken(data.token);
+        let user = await db.User.findOne({
+        where : {email: dataUser.email}
+        })
+
+        await db.Like.destroy({
+            where:{
+                userId: user.id,
+                movieId:data.movieId
+            }
+        });
+        return {
+            EM:" Thành công",
+            EC:0,
+            DT:[]
+        }
+    }
+    catch(e){
+        console.log(e);
+        return {
+            EM:"Lỗi server",
+            EC:1,
+            DT:data
+        }
+    }
+}
+// lấy phim theo type
+const getMovieType = async (data)=>{
+    try{
+        let listMovie = await db.Movie.findAll({
+            where:{
+                type: data,
+            }
+           
+        })
+        return{
+            EM: ' Thành công',
+            EC: 0,
+            DT: listMovie
+        }
+    }
+    catch(e){
+        console.log(e);
+        return {
+            EM:'Lỗi với  sever',
+            EC: 1,
+             DT:""
+        }
+    }
+}
+//lấy phim theo quốc gia
+const getMovieNational = async (data)=>{
+    try{
+        let listMovie = await db.Movie.findAll({
+            where:{
+                national: data,
+            }
+           
+        })
+        return{
+            EM: ' Thành công',
+            EC: 0,
+            DT: listMovie
+        }
+    }
+    catch(e){
+        console.log(e);
+        return {
+            EM:'Lỗi với  sever',
+            EC: 1,
+             DT:""
+        }
+    }
+}
 module.exports ={
     getMovies,getMoviesById,getMoviesPagnination,getMoviesCategory,
-    createNewMovie,updateMovie,deleteMovie
+    createNewMovie,updateMovie,deleteMovie,getMovieSearch,
+    getMovieLike,createLikeMovie,deleteLikeMovie,
+    getMovieType,getMovieNational
 }

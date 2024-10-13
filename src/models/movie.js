@@ -15,6 +15,8 @@ module.exports = (sequelize, DataTypes) => {
       Movie.hasMany(models.Comment);
       Movie.hasMany(models.Episode);
       Movie.hasMany(models.Category_movie);
+      Movie.hasMany(models.History);
+      Movie.hasMany(models.Like);
     }
   };
   Movie.init({
@@ -29,7 +31,9 @@ module.exports = (sequelize, DataTypes) => {
     url_img: DataTypes.STRING,
     ep_curent: DataTypes.INTEGER,
     ep_total: DataTypes.INTEGER,
-    actor: DataTypes.STRING
+    actor: DataTypes.STRING,
+    img_thumb:DataTypes.STRING,
+    year:DataTypes.STRING
   }, {
     sequelize,
     modelName: 'Movie',

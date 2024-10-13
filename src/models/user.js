@@ -13,6 +13,8 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       User.belongsTo(models.Group);
       User.hasMany(models.Comment);
+      User.hasMany(models.History);
+      User.hasMany(models.Like);
     }
   };
   User.init({

@@ -44,6 +44,12 @@ module.exports = {
       actor: {
         type: Sequelize.STRING
       },
+      img_thumb: {
+        type: Sequelize.STRING
+      },
+      year: {
+        type: Sequelize.STRING
+      },
       createdAt: {
         allowNull: true,
         type: Sequelize.DATE  

@@ -7,6 +7,8 @@ const moviesController = require('../controllers/moviesController');
 const categoryController = require('../controllers/categoryController');
 const episodeController = require('../controllers/episodeController')
 const commentController = require('../controllers/commentController')
+const historyController = require('../controllers/historyController')
+const accountController = require('../controllers/accountController')
 const {checkUserJWT,checkUserPermision} = require('../middleware/jwtAction')
 
 
@@ -32,13 +34,24 @@ router.get('/movie/read',moviesController.readFunc);
 router.post('/movie/create',moviesController.createFunc);
 router.put('/movie/update',moviesController.updateFunc);
 router.delete('/movie/delete',moviesController.deleteFunc)
+// phim theo loại và quốc gia
+router.get('/movie/type',moviesController.readMovieType);
+router.get('/movie/national',moviesController.readMovieNational);
+/// phim yêu thcis
+router.get('/movie/like',moviesController.readLikeFunc)
+router.post('/movie/createLike',moviesController.createLikeFunc);
+router.delete('/movie/deleteLike',moviesController.deleteLikeFunc)
+/// lịch sử xem phim
+router.get('/movie/history',historyController.readFunc)
+router.post('/movie/create-history',historyController.createFunc)
+// account
+router.get('/account/read',accountController.readFunc)
+router.put('/account/password/update',accountController.updateFunc)
 // get category
-
 router.get('/category/read',categoryController.readFunc);
 router.post('/category/create',categoryController.createFunc);
 router.put('/category/update',categoryController.updateFunc);
 router.delete('/category/delete',categoryController.deleteFunc)
-
 ////
 
 //get episode
